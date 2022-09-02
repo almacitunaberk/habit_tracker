@@ -5,9 +5,11 @@ const {
   editHabitById,
   deleteHabitById,
 } = require('../controllers/habitsControllers');
+const { isLoggedIn } = require('../middleware/isLoggedIn');
 
 const router = require('express').Router();
 
+router.use(isLoggedIn);
 router.get('/', getAllHabits);
 router.get('/:id', getHabitById);
 router.post('/', createNewHabit);
