@@ -1,25 +1,11 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { fetchAllHabits } from './redux/slices/habitsSlice';
+import Dashboard from './components/Dashboard/Dashboard';
+import './App.css';
 
 function App() {
-  const habits = useSelector((state) => state.habits);
-  console.log(habits);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchAllHabits());
-  }, []);
   return (
-    <>
-      {habits.loading && <h1>Loading...</h1>}
-      {habits.habits && (
-        <>
-          {habits.habits.map((habit) => {
-            return <h1 key={habit.id}>{habit.name}</h1>;
-          })}
-        </>
-      )}
-    </>
+    <div className="container">
+      <Dashboard />
+    </div>
   );
 }
 
