@@ -41,7 +41,6 @@ const deleteUsers = async () => {
 
 const seedUsers = async () => {
   await User.destroy({ where: {} });
-  await connectDB();
   await User.sync();
   for (let i = 0; i < users.length; i++) {
     const user = users[i];
