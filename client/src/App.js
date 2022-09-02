@@ -1,13 +1,18 @@
-import Dashboard from './components/Dashboard/Dashboard';
-import Overview from './components/Overview/Overview';
+import DashboardContainer from './components/DashboardContainer/DashboardContainer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import './App.css';
+import React from 'react';
+import Login from './components/Login/Login';
 
 function App() {
   return (
-    <div className="container">
-      <Dashboard />
-      <Overview />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<DashboardContainer />}></Route>
+      </Routes>
+    </Router>
   );
 }
 
