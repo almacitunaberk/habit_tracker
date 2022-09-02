@@ -6,6 +6,6 @@
   overflow-x: hidden;
   font-size: 0.88rem;
   display: grid;
-  grid-template-columns: 14rem 1fr;
+  grid-template-columns: max-content 1fr;
   gap: 1.8rem;
 }

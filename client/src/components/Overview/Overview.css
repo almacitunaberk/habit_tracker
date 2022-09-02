@@ -1,0 +1,16 @@
+.overview__container {
+  margin-top: 1.4rem;
+  margin-right: 2rem;
+}
+
+.overview__title {
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+.habits__insights {
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fill, 1fr);
+}

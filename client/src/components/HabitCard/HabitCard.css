@@ -1,0 +1,46 @@
+.habit__card {
+  background: var(--color-white);
+  padding: var(--padding-1);
+  border-radius: var(--card-border-radius);
+  margin-top: 1rem;
+  box-shadow: var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+.habit__card:hover {
+  transform: scale(1.02);
+  box-shadow: none;
+}
+
+.habit__card .middle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.habit__name {
+  margin: 1rem 0 0.6rem;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.habit__card .progress {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+}
+
+.middle .left h3 {
+  font-weight: 500;
+}
+
+.middle .left h1 {
+  font-weight: 300;
+}
+
+.text-muted {
+  color: var(--color-info-dark);
+  display: block;
+  margin-top: 1.6rem;
+}
