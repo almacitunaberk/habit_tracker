@@ -107,7 +107,7 @@ function Register() {
               placeholder="Enter your password"
               onChange={handleInputChange}
             />
-            <button onClick={handleVisibilitySwitch}>
+            <button type="button" onClick={handleVisibilitySwitch}>
               <span className="material-symbols-outlined">{visible ? 'visibility_off' : 'visibility'}</span>
             </button>
           </div>

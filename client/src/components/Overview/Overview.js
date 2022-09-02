@@ -1,18 +1,16 @@
 import './Overview.css';
 import HabitCard from '../HabitCard/HabitCard';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllHabits } from '../../redux/slices/habitsSlice';
 
 function Overview() {
   const habits = useSelector((state) => state.habits);
-  const user = useSelector((state) => state.user);
-  console.log(habits);
+  const user = userSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllHabits());
-    console.log(user);
   }, []);
 
   return (
