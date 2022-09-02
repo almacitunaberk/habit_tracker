@@ -43,10 +43,8 @@ passport.use(
     try {
       const user = await User.findOne({ where: { username } });
       if (!user) return done(null, false);
-      //const isMatch = await matchPassword(password, user.password);
-      const isMatch = password === user.password;
+      const isMatch = await matchPassword(password, user.password);
       if (!isMatch) return done(null, false);
-      console.log(user);
       return done(null, user);
     } catch (err) {
       done(err, null);
@@ -64,9 +62,8 @@ passport.use(
       const email = await User.findOne({ where: { email_address } });
       if (email) return done(null, false);
       const newUser = await createUser({ username, password, email_address, full_name });
-      return done(null, user);
+      return done(null, newUser);
     } catch (err) {
-      console.log(err);
       done(err);
     }
   })

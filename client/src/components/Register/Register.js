@@ -2,8 +2,10 @@ import './Register.css';
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/slices/userSlice';
 
-function Login() {
+function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [fullname, setFullname] = useState('');
@@ -12,14 +14,42 @@ function Login() {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const handleVisibilitySwitch = (e) => {
     setVisible((prev) => !prev);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setUsername();
-    setPassword();
+    const response = await fetch('http://localhost:4000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        email_address: email,
+        password,
+        full_name: fullname,
+      }),
+    });
+    if (response.ok) {
+      const user = await response.json();
+      dispatch(
+        setUser({
+          username: user.username,
+          email: user.email_address,
+          fullname: user.full_name,
+        })
+      );
+      navigate('/');
+    } else {
+      setUsername('');
+      setPassword('');
+      setEmail('');
+      setFullname('');
+    }
   };
 
   const handleInputChange = (e) => {
@@ -92,7 +122,6 @@ function Login() {
             onChange={handleInputChange}
           />
         </div>
-
         <button className="button" type="submit">
           Register
         </button>
@@ -110,4 +139,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

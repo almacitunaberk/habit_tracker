@@ -6,11 +6,13 @@ import { fetchAllHabits } from '../../redux/slices/habitsSlice';
 
 function Overview() {
   const habits = useSelector((state) => state.habits);
+  const user = useSelector((state) => state.user);
   console.log(habits);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllHabits());
+    console.log(user);
   }, []);
 
   return (

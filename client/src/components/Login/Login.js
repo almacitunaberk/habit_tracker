@@ -2,6 +2,8 @@ import './Login.css';
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { setUser } from '../../redux/slices/userSlice';
+import { useDispatch } from 'react-redux';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -10,14 +12,38 @@ function Login() {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const handleVisibilitySwitch = (e) => {
     setVisible((prev) => !prev);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setUsername();
-    setPassword();
+    const response = await fetch('http://localhost:4000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    });
+    if (response.ok) {
+      const user = await response.json();
+      dispatch(
+        setUser({
+          username: user.username,
+          email: user.email_address,
+          fullname: user.full_name,
+        })
+      );
+      navigate('/');
+    } else {
+      setUsername('');
+      setPassword('');
+    }
   };
 
   const handleUsernameChange = (e) => {
