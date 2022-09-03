@@ -1,5 +1,5 @@
-const { sequelize } = require('../database/db.js');
 const { Sequelize, Model, DataTypes } = require('sequelize');
+const { sequelize } = require('../database/db.js');
 const User = require('./userModel');
 
 class Habit extends Model {}
@@ -34,10 +34,6 @@ Habit.init(
       allowNull: false,
       defaultValue: Sequelize.fn('now'),
     },
-    user_id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-    },
   },
   {
     sequelize,
@@ -46,5 +42,8 @@ Habit.init(
     timestamps: false,
   }
 );
+
+Habit.belongsTo(User, { foreignKey: 'user_id' });
+User.hasMany(Habit);
 
 module.exports = Habit;
