@@ -4,9 +4,8 @@ import { useState, useEffect } from 'react';
 
 function Protected({ children }) {
   //const { isLoggedIn } = useSelector((state) => state.user);
-  const { isLoggedIn } = useSelector((state) => state.user);
-  console.log('IS LOGGED IN: ', isLoggedIn);
-  if (!isLoggedIn) {
+  const user = useSelector((state) => state.user);
+  if (!user.isLoggedIn) {
     return <Navigate to="/login" replace />;
   } else {
     return children;

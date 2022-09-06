@@ -2,7 +2,7 @@ import Dashboard from '../Dashboard/Dashboard';
 import Overview from '../Overview/Overview';
 import './DashboardContainer.css';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllHabits } from '../../redux/slices/habitsSlice';
 
