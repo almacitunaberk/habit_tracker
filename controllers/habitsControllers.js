@@ -32,5 +32,5 @@ module.exports.editHabitById = (req, res) => {
 module.exports.deleteHabitById = catchAsync(async (req, res, next) => {
   const id = req.params.id;
   const deletedHabit = await sequelize.query(`DELETE FROM "habits" WHERE "habits"."id" = '${id}' RETURNING *;`);
-  res.json(deletedHabit);
+  res.json(deletedHabit[0][0]);
 });

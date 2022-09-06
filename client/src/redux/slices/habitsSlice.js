@@ -31,6 +31,18 @@ const createNewHabit = createAsyncThunk('habits/createNewHabit', async (newHabit
   return data;
 });
 
+const deleteHabit = createAsyncThunk('habits/deleteHabit', async (habitId) => {
+  const response = await fetch(`http://localhost:4000/habits/${habitId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+  const data = await response.json();
+  return data;
+});
+
 const habtisSlice = createSlice({
   name: 'habits',
   initialState,
@@ -62,8 +74,21 @@ const habtisSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+    builder.addCase(deleteHabit.pending, (state, action) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteHabit.fulfilled, (state, action) => {
+      state.loading = false;
+      state.habits = state.habits.filter((habit) => habit.id !== action.payload.id);
+      state.error = null;
+    });
+    builder.addCase(deleteHabit.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
 
-export { fetchAllHabits, createNewHabit };
+export { fetchAllHabits, createNewHabit, deleteHabit };
 export default habtisSlice.reducer;

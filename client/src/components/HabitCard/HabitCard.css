@@ -44,3 +44,35 @@
   display: block;
   margin-top: 1.6rem;
 }
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.habit-card__button {
+  padding: 1rem 0;
+  width: calc(100% / 4);
+  border-radius: 0.4rem;
+  color: var(--color-white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.habit-card__button:hover {
+  transform: scale(1.08);
+}
+
+.completed__button {
+  background: #198754;
+}
+
+.edit__button {
+  background: #ffc107;
+}
+
+.delete__button {
+  background: #dc3545;
+}
