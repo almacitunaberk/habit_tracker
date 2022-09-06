@@ -1,0 +1,4 @@
+.container {
+  width: 94%;
+  grid-template-columns: 7rem 1fr;
+}
