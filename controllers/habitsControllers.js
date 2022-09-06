@@ -16,9 +16,14 @@ module.exports.getHabitById = catchAsync(async (req, res, next) => {
   res.json(habit[0]);
 });
 
-module.exports.createNewHabit = (req, res) => {
-  res.send('NOT YET!');
-};
+module.exports.createNewHabit = catchAsync(async (req, res) => {
+  const user = req.user;
+  const habit = req.body;
+  habit.days_of_completion = [];
+  const newHabit = await Habit.create(habit);
+  await newHabit.setUser(user.id);
+  res.json(newHabit.dataValues);
+});
 
 module.exports.editHabitById = (req, res) => {
   res.send('NOT YET!');

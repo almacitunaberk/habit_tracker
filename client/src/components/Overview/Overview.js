@@ -20,11 +20,15 @@ function Overview({ habits }) {
     }
   };
 
+  const handleSubmit = () => {
+    setShowNewHabitForm(false);
+  };
+
   return (
     <div className="overview__container" onClick={handleClickOutside}>
       <h1 className="overview__title">Dashboard</h1>
       <div className="habits__insights">
-        {!habits.loading && (
+        {!habits.loading && habits.habits && (
           <>
             {habits.habits.map((habit) => {
               return <HabitCard key={habit.id} habit={habit} />;
@@ -35,7 +39,7 @@ function Overview({ habits }) {
       <button className="new-habit__button" onClick={handleClick} ref={buttonRef}>
         Add New Habit
       </button>
-      {showNewHabitForm && <NewHabit formRef={newHabitFormRef} />}
+      {showNewHabitForm && <NewHabit formRef={newHabitFormRef} onSubmit={handleSubmit} />}
       <div class="recent__activites"></div>
     </div>
   );

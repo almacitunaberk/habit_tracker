@@ -1,11 +1,14 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createNewHabit } from '../../redux/slices/habitsSlice';
 import './NewHabit.css';
 
-function NewHabit({ formRef }) {
+function NewHabit({ formRef, onSubmit }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [frequency, setFrequency] = useState(0);
   const [startingDate, setStartingDate] = useState(Date.now());
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,6 +28,18 @@ function NewHabit({ formRef }) {
     }
   };
 
+  const handleCreateNewHabit = () => {
+    dispatch(
+      createNewHabit({
+        name,
+        description,
+        frequency,
+        startingDate,
+      })
+    );
+    onSubmit();
+  };
+
   return (
     <form className="new-habit-form__container" ref={formRef}>
       <h2 className="form__title">New Habit</h2>
@@ -37,6 +52,7 @@ function NewHabit({ formRef }) {
         value={description}
         onChange={handleChange}
         placeholder="Description of the habit"
+        required
       />
       <label htmlFor="frequency">How many days in a week</label>
       <input
@@ -45,6 +61,7 @@ function NewHabit({ formRef }) {
         value={frequency}
         onChange={handleChange}
         placeholder="Number of days in a week"
+        required
       />
       <label htmlFor="startingDate">Starting in</label>
       <input
@@ -53,8 +70,9 @@ function NewHabit({ formRef }) {
         value={startingDate}
         onChange={handleChange}
         placeholder="When do you want to start?"
+        required
       />
-      <button type="button" className="create_button">
+      <button type="button" className="create_button" onClick={handleCreateNewHabit}>
         Create New Habit
       </button>
     </form>
