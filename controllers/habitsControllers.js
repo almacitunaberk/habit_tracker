@@ -3,17 +3,15 @@ const Habit = require('../models/habitModel');
 const User = require('../models/userModel');
 
 module.exports.getAllHabits = catchAsync(async (req, res, next) => {
-  console.log('REQ.USER: ', req.user);
-  res.send(req.user);
+  const { user_id } = req.body;
+  const _habits = await Habit.findAll({ where: { user_id: user_id } });
+  const habits = _habits.map((habit) => habit.dataValues);
+  res.json(habits);
 });
 
 module.exports.getHabitById = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const response = await pool.query(`SELECT * FROM habits WHERE id = $1;`, [id]);
-  if (response.rowCount === 0) {
-    throw new Error('No such habit is found');
-  }
-  res.json(response.rows[0]);
+  return;
 });
 
 module.exports.createNewHabit = (req, res) => {

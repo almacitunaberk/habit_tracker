@@ -8,8 +8,15 @@ const initialState = {
 };
 
 const fetchAllHabits = createAsyncThunk('habits/fetchAllHabits', async (user_id) => {
-  const habits = await api.fetchAllHabits(user_id);
-  return habits;
+  const response = await fetch('http://localhost:4000/habits', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ user_id: user_id }),
+  });
+  const data = await response.json();
+  return data;
 });
 
 const habtisSlice = createSlice({
@@ -20,6 +27,7 @@ const habtisSlice = createSlice({
     builder.addCase(fetchAllHabits.pending, (state, action) => {
       state.loading = true;
       state.error = null;
+      state.habits = [];
     });
     builder.addCase(fetchAllHabits.fulfilled, (state, action) => {
       state.loading = false;
@@ -28,6 +36,7 @@ const habtisSlice = createSlice({
     });
     builder.addCase(fetchAllHabits.rejected, (state, action) => {
       state.loading = false;
+      state.habits = [];
       state.error = action.payload;
     });
   },

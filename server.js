@@ -20,7 +20,11 @@ const userRouter = require('./routes/userRouter');
 const { createUser, matchPassword } = require('./utils/databaseHelper.js');
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    'access-control-allow-origin': 'http://localhost:3000',
+  })
+);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser(process.env.SESSION_SECRET));

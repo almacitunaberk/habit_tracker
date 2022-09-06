@@ -1,6 +1,12 @@
 const api = {};
 api.fetchAllHabits = async (user_id) => {
-  const response = await fetch('http://localhost:4000/habits', { credentials: 'include' });
+  const response = await fetch('http://localhost:4000/habits', {
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ user_id }),
+  });
   const data = await response.json();
   return data;
 };

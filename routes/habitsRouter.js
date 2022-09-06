@@ -9,8 +9,9 @@ const { isLoggedIn } = require('../middleware/isLoggedIn');
 
 const router = require('express').Router();
 
-router.use(isLoggedIn);
-router.get('/', getAllHabits);
+//router.use(isLoggedIn);
+
+router.post('/', getAllHabits);
 router.get('/:id', getHabitById);
 router.post('/', createNewHabit);
 router.post('/:id', editHabitById);
