@@ -10,6 +10,10 @@ module.exports.loginUser = (req, res, next) => {
 };
 
 module.exports.registerNewUser = (req, res, next) => {
-  res.send(req.user);
+  res.json({
+    user: req.user,
+    cookie: req.session.cookie,
+    userId: req.session.passport.user,
+  });
 };
 module.exports.logout = () => {};
