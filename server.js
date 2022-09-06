@@ -1,5 +1,6 @@
 const express = require('express');
 const expressSession = require('express-session');
+const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors');
@@ -11,16 +12,18 @@ connectDB();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
+const Habit = require('./models/habitModel');
 const User = require('./models/userModel');
 
 const habitsRouter = require('./routes/habitsRouter');
 const userRouter = require('./routes/userRouter');
-const { usernameExists, createUser, matchPassword } = require('./utils/databaseHelper.js');
+const { createUser, matchPassword } = require('./utils/databaseHelper.js');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(
   expressSession({
     secret: process.env.SESSION_SECRET,
@@ -70,10 +73,12 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  console.log('SERIALIZING: ', user);
+  done(null, user.dataValues.id);
 });
 
 passport.deserializeUser(async (id, done) => {
+  console.log('DESERIALIZING: ', id);
   const { err, user } = await User.findByPk(id);
   if (err) {
     return done(err);

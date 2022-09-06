@@ -7,8 +7,8 @@ const initialState = {
   error: null,
 };
 
-const fetchAllHabits = createAsyncThunk('habits/fetchAllHabits', async () => {
-  const habits = await api.fetchAllHabits();
+const fetchAllHabits = createAsyncThunk('habits/fetchAllHabits', async (user_id) => {
+  const habits = await api.fetchAllHabits(user_id);
   return habits;
 });
 

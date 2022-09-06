@@ -1,9 +1,10 @@
 const catchAsync = require('../utils/catchAsync');
-const pool = require('../database/db');
+const Habit = require('../models/habitModel');
+const User = require('../models/userModel');
 
 module.exports.getAllHabits = catchAsync(async (req, res, next) => {
-  const response = await pool.query(`SELECT * FROM habits;`);
-  res.json(response.rows);
+  console.log('REQ.USER: ', req.user);
+  res.send(req.user);
 });
 
 module.exports.getHabitById = catchAsync(async (req, res, next) => {

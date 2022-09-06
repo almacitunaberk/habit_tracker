@@ -3,7 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../redux/slices/userSlice';
+import { setUser, registerUser } from '../../redux/slices/userSlice';
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -22,34 +22,20 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:4000/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username,
-        email_address: email,
-        password,
-        full_name: fullname,
-      }),
-    });
-    if (response.ok) {
-      const user = await response.json();
-      dispatch(
-        setUser({
-          username: user.username,
-          email: user.email_address,
-          fullname: user.full_name,
-        })
-      );
-      navigate('/');
-    } else {
-      setUsername('');
-      setPassword('');
-      setEmail('');
-      setFullname('');
-    }
+    dispatch(
+      registerUser(
+        { username, email_address: email, password, full_name: fullname },
+        () => {
+          navigate('/');
+        },
+        () => {
+          setUsername('');
+          setPassword('');
+          setEmail('');
+          setFullname('');
+        }
+      )
+    );
   };
 
   const handleInputChange = (e) => {

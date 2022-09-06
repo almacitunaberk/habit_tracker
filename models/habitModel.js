@@ -1,7 +1,6 @@
 const { Sequelize, Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../database/db.js');
 const User = require('./userModel');
-
 class Habit extends Model {}
 
 Habit.init(
@@ -29,21 +28,14 @@ Habit.init(
       allowNull: false,
       defaultValue: [],
     },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.fn('now'),
-    },
   },
   {
     sequelize,
     modelName: 'habit',
     underscored: true,
-    timestamps: false,
   }
 );
 
 Habit.belongsTo(User, { foreignKey: 'user_id' });
-User.hasMany(Habit);
 
 module.exports = Habit;

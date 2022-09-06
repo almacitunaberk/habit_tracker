@@ -1,6 +1,6 @@
 const api = {};
-api.fetchAllHabits = async () => {
-  const response = await fetch('http://localhost:4000/habits');
+api.fetchAllHabits = async (user_id) => {
+  const response = await fetch('http://localhost:4000/habits', { credentials: 'include' });
   const data = await response.json();
   return data;
 };

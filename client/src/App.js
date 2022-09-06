@@ -1,6 +1,5 @@
 import DashboardContainer from './components/DashboardContainer/DashboardContainer';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import './App.css';
 import React, { useEffect } from 'react';
 import Login from './components/Login/Login';
