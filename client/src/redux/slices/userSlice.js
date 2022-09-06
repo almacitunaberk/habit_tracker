@@ -16,6 +16,7 @@ const loginUser = createAsyncThunk('user/login', async ({ body, successCallback,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
+    credentials: 'include',
   });
   if (response.ok) {
     const data = await response.json();

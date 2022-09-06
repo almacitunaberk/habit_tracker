@@ -1,11 +1,10 @@
 const catchAsync = require('../utils/catchAsync');
 const User = require('../models/userModel');
+const passport = require('passport');
 
 module.exports.loginUser = (req, res, next) => {
   res.json({
     user: req.user,
-    cookie: req.session.cookie,
-    userId: req.session.passport.user,
   });
 };
 

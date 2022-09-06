@@ -71,7 +71,6 @@ const seedHabits = async () => {
       const user = users[Math.floor(Math.random() * users.length)];
       const newHabit = await Habit.create(_habit);
       await newHabit.setUser(user.id);
-      console.log('New habit created: ', newHabit);
     }
   } catch (err) {
     console.log(err);

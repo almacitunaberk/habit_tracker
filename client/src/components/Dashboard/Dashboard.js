@@ -18,6 +18,16 @@ function Dashboard() {
       })
     );
   };
+  const handleClick = async () => {
+    await fetch('http://localhost:4000/habits/dum', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log('SEND');
+  };
   return (
     <div className="dashboard">
       <div className="logo">
@@ -32,6 +42,10 @@ function Dashboard() {
       <div className="dashboard__item">
         <span class="material-symbols-sharp dashboard__item__icon">format_list_numbered</span>
         <h3 className="dashboard__item__name">Habits List</h3>
+      </div>
+      <div className="dashboard__item" onClick={handleClick}>
+        <span class="material-symbols-sharp dashboard__item__icon">format_list_numbered</span>
+        <h3 className="dashboard__item__name">SEND</h3>
       </div>
       <div className="dashboard__item" onClick={handleLogout}>
         <span class="material-symbols-sharp">logout</span>

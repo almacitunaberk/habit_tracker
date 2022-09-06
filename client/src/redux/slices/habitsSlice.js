@@ -7,13 +7,13 @@ const initialState = {
   error: null,
 };
 
-const fetchAllHabits = createAsyncThunk('habits/fetchAllHabits', async (user_id) => {
+const fetchAllHabits = createAsyncThunk('habits/fetchAllHabits', async () => {
   const response = await fetch('http://localhost:4000/habits', {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ user_id: user_id }),
+    credentials: 'include',
   });
   const data = await response.json();
   return data;

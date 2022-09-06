@@ -6,7 +6,7 @@ dotenv.config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { connectDB } = require('./database/db.js');
-// ROUTES
+
 connectDB();
 
 const passport = require('passport');
@@ -20,23 +20,27 @@ const userRouter = require('./routes/userRouter');
 const { createUser, matchPassword } = require('./utils/databaseHelper.js');
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(
   cors({
-    'access-control-allow-origin': 'http://localhost:3000',
+    credentials: true,
+    origin: 'http://localhost:3000',
   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cookieParser(process.env.SESSION_SECRET));
+
 app.use(
   expressSession({
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
+    resave: true,
+    saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      expires: Date.now() + 1000 * 60 * 30,
-      maxAge: 1000 * 60 * 30,
+      maxAge: 1000 * 60 * 600,
+      expires: Date.now() + 1000 * 60 * 600,
     },
   })
 );
@@ -52,7 +56,7 @@ passport.use(
       if (!user) return done(null, false);
       const isMatch = await matchPassword(password, user.password);
       if (!isMatch) return done(null, false);
-      return done(null, user);
+      return done(null, user.dataValues);
     } catch (err) {
       done(err, null);
     }
@@ -77,25 +81,19 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.dataValues.id);
+  done(null, user.id);
 });
 
-passport.deserializeUser(async (id, done) => {
-  const { err, user } = await User.findByPk(id);
-  if (err) {
-    return done(err);
-  }
-  done(null, user);
+passport.deserializeUser((id, done) => {
+  User.findByPk(id).then((user) => {
+    done(null, user.dataValues);
+  });
 });
 
 const PORT = process.env.PORT || 4000;
 
 app.use('/habits', habitsRouter);
 app.use('/', userRouter);
-
-app.all('*', (req, res, next) => {
-  next(new Error('Error occured'));
-});
 
 app.use((err, req, res, next) => {
   res.status(500).send(err.message);

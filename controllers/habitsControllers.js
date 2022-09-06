@@ -3,8 +3,8 @@ const Habit = require('../models/habitModel');
 const User = require('../models/userModel');
 
 module.exports.getAllHabits = catchAsync(async (req, res, next) => {
-  const { user_id } = req.body;
-  const _habits = await Habit.findAll({ where: { user_id: user_id } });
+  const user = req.user;
+  const _habits = await Habit.findAll({ where: { user_id: user.id } });
   const habits = _habits.map((habit) => habit.dataValues);
   res.json(habits);
 });

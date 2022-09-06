@@ -25,7 +25,6 @@ function Login() {
       loginUser({
         body: { username, password },
         successCallback: () => {
-          console.log('HERE');
           navigate('/');
         },
         failureCallback: () => {
