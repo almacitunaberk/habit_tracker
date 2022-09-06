@@ -2,7 +2,6 @@ import './Login.css';
 import { FcGoogle } from 'react-icons/fc';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setUser } from '../../redux/slices/userSlice';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../redux/slices/userSlice';
 

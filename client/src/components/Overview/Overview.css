@@ -14,3 +14,21 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(auto-fill, 1fr);
 }
+
+.new-habit__button {
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  color: var(--color-primary);
+  border: 3px dashed var(--color-primary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.new-habit__button:hover {
+  transform: scale(1.04);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
