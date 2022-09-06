@@ -16,4 +16,11 @@ module.exports.registerNewUser = (req, res, next) => {
     userId: req.session.passport.user,
   });
 };
-module.exports.logout = () => {};
+module.exports.logoutUser = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.log('ERROR logging out: ', err);
+      return next(err);
+    }
+  });
+};

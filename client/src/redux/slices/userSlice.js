@@ -44,6 +44,7 @@ const registerUser = createAsyncThunk('user/register', async ({ body, successCal
 const logoutUser = createAsyncThunk('user/logout', async (successCallback, failureCallback) => {
   const response = await fetch('http://localhost:4000/logout', {
     method: 'POST',
+    credentials: true,
   });
   if (response.ok) {
     return successCallback;

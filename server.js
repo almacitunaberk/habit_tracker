@@ -73,12 +73,10 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  console.log('SERIALIZING: ', user);
   done(null, user.dataValues.id);
 });
 
 passport.deserializeUser(async (id, done) => {
-  console.log('DESERIALIZING: ', id);
   const { err, user } = await User.findByPk(id);
   if (err) {
     return done(err);

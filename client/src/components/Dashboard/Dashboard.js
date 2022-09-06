@@ -1,11 +1,22 @@
 import './Dashboard.css';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../redux/slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(logoutUser());
+    dispatch(
+      logoutUser({
+        successCallback: () => {
+          navigate('/login');
+        },
+        failureCallback: () => {
+          window.alert('Something went wrong');
+        },
+      })
+    );
   };
   return (
     <div className="dashboard">
