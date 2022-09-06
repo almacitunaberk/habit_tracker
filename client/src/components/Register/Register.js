@@ -23,18 +23,18 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(
-      registerUser(
-        { username, email_address: email, password, full_name: fullname },
-        () => {
+      registerUser({
+        body: { username, email_address: email, password, full_name: fullname },
+        successCallback: () => {
           navigate('/');
         },
-        () => {
+        failureCallback: () => {
           setUsername('');
           setPassword('');
           setEmail('');
           setFullname('');
-        }
-      )
+        },
+      })
     );
   };
 

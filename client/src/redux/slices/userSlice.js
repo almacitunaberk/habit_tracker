@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   error: null,
   isLoggedIn: false,
+  sessionExpires: null,
 };
 
 const loginUser = createAsyncThunk('user/login', async ({ body, successCallback, failureCallback }) => {
@@ -34,9 +35,9 @@ const registerUser = createAsyncThunk('user/register', async ({ body, successCal
   });
   if (response.ok) {
     const data = await response.json();
-    return [data, successCallback];
+    return { data, callback: successCallback };
   } else {
-    return [null, failureCallback];
+    return { data: null, callback: failureCallback };
   }
 });
 
@@ -71,6 +72,7 @@ const userSlice = createSlice({
       const { data, callback } = action.payload;
       if (data !== null) {
         state.user = data.user;
+        state.sessionExpires = data._expires;
         state.loading = false;
         state.error = null;
         state.isLoggedIn = true;
@@ -87,12 +89,14 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
       state.isLoggedIn = false;
+      state.sessionExpires = null;
     });
     builder.addCase(registerUser.pending, (state, action) => {
       state.user = null;
       state.loading = true;
       state.error = null;
       state.isLoggedIn = false;
+      state.sessionExpires = null;
     });
     builder.addCase(registerUser.fulfilled, (state, action) => {
       const { data, callback } = action.payload;
@@ -101,11 +105,13 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.isLoggedIn = true;
+        state.sessionExpires = data._expires;
       } else {
         state.user = null;
         state.loading = false;
         state.error = null;
         state.isLoggedIn = false;
+        state.sessionExpires = null;
       }
       callback();
     });
@@ -122,9 +128,10 @@ const userSlice = createSlice({
       state.error = null;
       state.isLoggedIn = false;
       state.loading = false;
+      state.sessionExpires = null;
       callback();
     });
-    builder.addCase(logoutUser, (state, action) => {
+    builder.addCase(logoutUser.rejected, (state, action) => {
       state.user = null;
       state.loading = false;
       state.error = action.payload;

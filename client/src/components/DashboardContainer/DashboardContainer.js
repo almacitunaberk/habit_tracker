@@ -12,8 +12,9 @@ function DashboardContainer() {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
+    console.log(user.user.id);
     dispatch(fetchAllHabits(user.user.id));
-  }, []);
+  }, [user]);
 
   return (
     <div className="container">
