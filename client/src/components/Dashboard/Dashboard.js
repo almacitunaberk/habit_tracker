@@ -29,10 +29,6 @@ function Dashboard() {
         <span class="material-symbols-sharp dashboard__item__icon">dashboard</span>
         <h3 className="dashboard__item__name">Dashboard</h3>
       </div>
-      <div className="dashboard__item">
-        <span class="material-symbols-sharp dashboard__item__icon">format_list_numbered</span>
-        <h3 className="dashboard__item__name">Habits List</h3>
-      </div>
       <div className="dashboard__item" onClick={handleLogout}>
         <span class="material-symbols-sharp">logout</span>
         <h3 className="dashboard__item__name">Logout</h3>
