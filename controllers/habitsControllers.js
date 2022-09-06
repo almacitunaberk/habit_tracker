@@ -25,9 +25,17 @@ module.exports.createNewHabit = catchAsync(async (req, res) => {
   res.json(newHabit.dataValues);
 });
 
-module.exports.editHabitById = (req, res) => {
-  res.send('NOT YET!');
-};
+module.exports.editHabitById = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const habits = await Habit.findAll({ where: { id } });
+  const habit = habits[0];
+  const editedHabit = req.body;
+  habit.name = editedHabit.name;
+  habit.description = editedHabit.description;
+  habit.frequency = editedHabit.frequency;
+  await habit.save();
+  res.json(habit);
+});
 
 module.exports.deleteHabitById = catchAsync(async (req, res, next) => {
   const id = req.params.id;

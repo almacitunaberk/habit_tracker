@@ -2,10 +2,14 @@ import './Overview.css';
 import HabitCard from '../HabitCard/HabitCard';
 import { useState, useRef, useEffect } from 'react';
 import NewHabit from '../NewHabit/NewHabit';
+import EditHabit from '../EditHabit/EditHabit';
 
 function Overview({ habits }) {
   const [showNewHabitForm, setShowNewHabitForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [editFormHabit, setEditFormHabit] = useState(null);
   const newHabitFormRef = useRef();
+  const editHabitFormRef = useRef();
   const buttonRef = useRef();
 
   const handleClick = (e) => {
@@ -18,10 +22,25 @@ function Overview({ habits }) {
         setShowNewHabitForm(false);
       }
     }
+    if (showEditForm) {
+      if (!editHabitFormRef.current.contains(e.target)) {
+        setShowEditForm(false);
+      }
+    }
   };
 
   const handleSubmit = () => {
     setShowNewHabitForm(false);
+  };
+
+  const handleEdit = (habit) => {
+    setEditFormHabit(habit);
+    setShowEditForm(true);
+  };
+
+  const handleSave = () => {
+    setShowEditForm(false);
+    setEditFormHabit(null);
   };
 
   return (
@@ -31,7 +50,7 @@ function Overview({ habits }) {
         {!habits.loading && habits.habits && (
           <>
             {habits.habits.map((habit) => {
-              return <HabitCard key={habit.id} habit={habit} />;
+              return <HabitCard key={habit.id} habit={habit} onEditClick={() => handleEdit(habit)} />;
             })}
           </>
         )}
@@ -40,6 +59,7 @@ function Overview({ habits }) {
         Add New Habit
       </button>
       {showNewHabitForm && <NewHabit formRef={newHabitFormRef} onSubmit={handleSubmit} />}
+      {showEditForm && <EditHabit editFormRef={editHabitFormRef} habit={editFormHabit} onSave={handleSave} />}
       <div class="recent__activites"></div>
     </div>
   );

@@ -13,7 +13,7 @@ const router = require('express').Router();
 router.get('/', isLoggedIn, getAllHabits);
 router.get('/:id', isLoggedIn, isHabitOwner, getHabitById);
 router.post('/', isLoggedIn, createNewHabit);
-router.post('/:id', isLoggedIn, isHabitOwner, editHabitById);
+router.put('/:id', isLoggedIn, isHabitOwner, editHabitById);
 router.delete('/:id', isLoggedIn, isHabitOwner, deleteHabitById);
 
 module.exports = router;
