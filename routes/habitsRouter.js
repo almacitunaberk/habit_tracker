@@ -6,20 +6,14 @@ const {
   deleteHabitById,
 } = require('../controllers/habitsControllers');
 const { isLoggedIn } = require('../middleware/isLoggedIn');
-const passport = require('passport');
+const { isHabitOwner } = require('../middleware/isHabitOwner');
 
 const router = require('express').Router();
 
-//router.use(isLoggedIn);
-
-router.get('/', getAllHabits);
-router.get('/dum', (req, res, next) => {
-  console.log('DUM REQ: ', req.user);
-  res.send('');
-});
-router.get('/:id', getHabitById);
-router.post('/', createNewHabit);
-router.post('/:id', editHabitById);
-router.delete('/:id', deleteHabitById);
+router.get('/', isLoggedIn, getAllHabits);
+router.get('/:id', isLoggedIn, isHabitOwner, getHabitById);
+router.post('/', isLoggedIn, createNewHabit);
+router.post('/:id', isLoggedIn, isHabitOwner, editHabitById);
+router.delete('/:id', isLoggedIn, isHabitOwner, deleteHabitById);
 
 module.exports = router;

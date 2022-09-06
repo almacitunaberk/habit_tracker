@@ -1,6 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 const Habit = require('../models/habitModel');
 const User = require('../models/userModel');
+const { sequelize } = require('../database/db');
 
 module.exports.getAllHabits = catchAsync(async (req, res, next) => {
   const user = req.user;
@@ -10,8 +11,9 @@ module.exports.getAllHabits = catchAsync(async (req, res, next) => {
 });
 
 module.exports.getHabitById = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  return;
+  const id = req.params.id;
+  const habit = await Habit.findAll({ where: { id } });
+  res.json(habit[0]);
 });
 
 module.exports.createNewHabit = (req, res) => {
@@ -23,7 +25,7 @@ module.exports.editHabitById = (req, res) => {
 };
 
 module.exports.deleteHabitById = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  const deletedHabit = await pool.query(`DELETE FROM habits WHERE id = $1`, [id]);
+  const id = req.params.id;
+  const deletedHabit = await sequelize.query(`DELETE FROM "habits" WHERE "habits"."id" = '${id}' RETURNING *;`);
   res.json(deletedHabit);
 });
