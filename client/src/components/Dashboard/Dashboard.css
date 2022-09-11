@@ -23,7 +23,7 @@
 }
 
 .logo span {
-  color: var(--color-danger);
+  color: var(--color-primary);
 }
 
 .dashboard__item {
