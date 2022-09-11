@@ -1,15 +1,19 @@
 import './Overview.css';
 import HabitCard from '../HabitCard/HabitCard';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import NewHabit from '../NewHabit/NewHabit';
 import EditHabit from '../EditHabit/EditHabit';
+import HabitCalendar from '../HabitCalendar/HabitCalendar';
 
 function Overview({ habits }) {
   const [showNewHabitForm, setShowNewHabitForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [editFormHabit, setEditFormHabit] = useState(null);
+  const [showHabitCalendar, setShowHabitCalendar] = useState(false);
+  const [calendarHabit, setCalendarHabit] = useState(null);
   const newHabitFormRef = useRef();
   const editHabitFormRef = useRef();
+  const calendarRef = useRef();
   const buttonRef = useRef();
 
   const handleClick = (e) => {
@@ -25,6 +29,11 @@ function Overview({ habits }) {
     if (showEditForm) {
       if (!editHabitFormRef.current.contains(e.target)) {
         setShowEditForm(false);
+      }
+    }
+    if (showHabitCalendar) {
+      if (!calendarRef.current.contains(e.target)) {
+        setShowHabitCalendar(false);
       }
     }
   };
@@ -43,6 +52,11 @@ function Overview({ habits }) {
     setEditFormHabit(null);
   };
 
+  const handleCalendar = (habit) => {
+    setShowHabitCalendar(true);
+    setCalendarHabit(habit);
+  };
+
   return (
     <div className="overview__container" onClick={handleClickOutside}>
       <h1 className="overview__title">Dashboard</h1>
@@ -50,7 +64,14 @@ function Overview({ habits }) {
         {!habits.loading && habits.habits && (
           <>
             {habits.habits.map((habit) => {
-              return <HabitCard key={habit.id} habit={habit} onEditClick={() => handleEdit(habit)} />;
+              return (
+                <HabitCard
+                  key={habit.id}
+                  habit={habit}
+                  onEditClick={() => handleEdit(habit)}
+                  onInfoClick={() => handleCalendar(habit)}
+                />
+              );
             })}
           </>
         )}
@@ -60,6 +81,7 @@ function Overview({ habits }) {
       </button>
       {showNewHabitForm && <NewHabit formRef={newHabitFormRef} onSubmit={handleSubmit} />}
       {showEditForm && <EditHabit editFormRef={editHabitFormRef} habit={editFormHabit} onSave={handleSave} />}
+      {showHabitCalendar && <HabitCalendar habit={calendarHabit} calendarRef={calendarRef} />}
       <div class="recent__activites"></div>
     </div>
   );
