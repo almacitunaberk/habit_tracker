@@ -21,7 +21,11 @@ function HabitCard({ habit, onEditClick }) {
       <div className="middle">
         <div className="left">
           <h3>Total Days Completed</h3>
-          <h1>{days_of_completion || 0}</h1>
+          <h1>
+            {days_of_completion >= 28
+              ? `${days_of_completion} - Habit formed`
+              : `${days_of_completion} - Have ${28 - days_of_completion} days to go`}
+          </h1>
         </div>
         <div className="progress">
           <ProgressCircle value={Math.floor((days_of_completion / 28) * 100)} />
