@@ -42,3 +42,11 @@ module.exports.deleteHabitById = catchAsync(async (req, res, next) => {
   const deletedHabit = await sequelize.query(`DELETE FROM "habits" WHERE "habits"."id" = '${id}' RETURNING *;`);
   res.json(deletedHabit[0][0]);
 });
+
+module.exports.completeHabitById = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const habit = await Habit.findByPk(id);
+  habit.days_of_completion += 1;
+  await habit.save();
+  res.json(habit);
+});

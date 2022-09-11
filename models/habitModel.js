@@ -24,9 +24,9 @@ Habit.init(
       defaultValue: 1,
     },
     days_of_completion: {
-      type: DataTypes.ARRAY(DataTypes.DATE),
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: [],
+      defaultValue: 0,
     },
   },
   {
