@@ -19,7 +19,8 @@ module.exports.getHabitById = catchAsync(async (req, res, next) => {
 module.exports.createNewHabit = catchAsync(async (req, res) => {
   const user = req.user;
   const habit = req.body;
-  habit.days_of_completion = [];
+  habit.days_of_completion = 0;
+  habit.frequency = parseInt(habit.frequency);
   const newHabit = await Habit.create(habit);
   await newHabit.setUser(user.id);
   res.json(newHabit.dataValues);

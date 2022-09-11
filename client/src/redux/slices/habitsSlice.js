@@ -93,7 +93,7 @@ const habtisSlice = createSlice({
     });
     builder.addCase(createNewHabit.fulfilled, (state, action) => {
       state.loading = false;
-      state.habits.push(action.payload);
+      state.habits = [...state.habits, action.payload];
       state.error = null;
     });
     builder.addCase(createNewHabit.rejected, (state, action) => {
