@@ -1,6 +1,7 @@
 const express = require('express');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors');
@@ -90,7 +91,13 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-const PORT = process.env.PORT || 4000;
+const publicPath = path.join(__dirname, 'client', 'build');
+
+app.use(express.static(publicPath));
+
+app.get('/', (req, res) => {
+  res.sendFile(publicPath, 'index.html');
+});
 
 app.use('/habits', habitsRouter);
 app.use('/', userRouter);
@@ -98,6 +105,8 @@ app.use('/', userRouter);
 app.use((err, req, res, next) => {
   res.status(500).send(err.message);
 });
+
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
   console.log(`Listening on PORT: ${PORT}`);
