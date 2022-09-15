@@ -2,10 +2,8 @@ import './HabitCard.css';
 import { useDispatch } from 'react-redux';
 import { deleteHabit, completedToday } from '../../redux/slices/habitsSlice';
 import ProgressCircle from '../ProgressCircle/ProgressCircle';
-import { useState, useRef } from 'react';
-import HabitCalendar from '../HabitCalendar/HabitCalendar';
 
-function HabitCard({ habit, onEditClick, onInfoClick }) {
+function HabitCard({ habit, onEditClick }) {
   const { id, name, description, frequency, days_of_completion } = habit;
   const dispatch = useDispatch();
 
@@ -37,9 +35,6 @@ function HabitCard({ habit, onEditClick, onInfoClick }) {
         <div className="bottom">
           <button className={`habit-card__button completed__button `} onClick={handleCompleted}>
             Completed
-          </button>
-          <button className={`habit-card__button info__button `} onClick={onInfoClick}>
-            Info
           </button>
           <button className="habit-card__button edit__button" onClick={() => onEditClick()}>
             Edit

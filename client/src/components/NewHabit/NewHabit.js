@@ -22,9 +22,6 @@ function NewHabit({ formRef, onSubmit }) {
       case 'frequency':
         setFrequency(value);
         break;
-      case 'startingDate':
-        setStartingDate(value);
-        break;
     }
   };
 
@@ -34,7 +31,6 @@ function NewHabit({ formRef, onSubmit }) {
         name,
         description,
         frequency,
-        startingDate,
       })
     );
     onSubmit();
@@ -61,15 +57,6 @@ function NewHabit({ formRef, onSubmit }) {
         value={frequency}
         onChange={handleChange}
         placeholder="Number of days in a week"
-        required
-      />
-      <label htmlFor="startingDate">Starting in</label>
-      <input
-        type="date"
-        name="startingDate"
-        value={startingDate}
-        onChange={handleChange}
-        placeholder="When do you want to start?"
         required
       />
       <button type="button" className="create_button" onClick={handleCreateNewHabit}>

@@ -7,7 +7,6 @@ function EditHabit({ editFormRef, onSave, habit }) {
   const [name, setName] = useState(habit.name || '');
   const [description, setDescription] = useState(habit.description || '');
   const [frequency, setFrequency] = useState(habit.frequency || 1);
-  const [startingDate, setStartingDate] = useState(Date.now());
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -22,9 +21,6 @@ function EditHabit({ editFormRef, onSave, habit }) {
       case 'frequency':
         setFrequency(value);
         break;
-      case 'startingDate':
-        setStartingDate(value);
-        break;
     }
   };
 
@@ -35,7 +31,6 @@ function EditHabit({ editFormRef, onSave, habit }) {
         name,
         description,
         frequency,
-        startingDate,
       })
     );
     onSave();
@@ -62,15 +57,6 @@ function EditHabit({ editFormRef, onSave, habit }) {
         value={frequency}
         onChange={handleChange}
         placeholder="Number of days in a week"
-        required
-      />
-      <label htmlFor="startingDate">Starting in</label>
-      <input
-        type="date"
-        name="startingDate"
-        value={startingDate}
-        onChange={handleChange}
-        placeholder="When do you want to start?"
         required
       />
       <button type="button" className="edit_button" onClick={handleSave}>
