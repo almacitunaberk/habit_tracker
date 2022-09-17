@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-require('dotenv').config();
 
 const initialState = {
   habits: [],
@@ -8,7 +7,7 @@ const initialState = {
 };
 
 const serverURL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://tahabitstracker.herokuapp.com';
+  process.env.REACT_APP_NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://tahabitstracker.herokuapp.com';
 
 const fetchAllHabits = createAsyncThunk('habits/fetchAllHabits', async () => {
   const response = await fetch(`${serverURL}/habits`, {

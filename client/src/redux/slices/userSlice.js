@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-require('dotenv').config();
 
 const initialState = {
   user: null,
@@ -10,7 +9,7 @@ const initialState = {
 };
 
 const serverURL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://tahabitstracker.herokuapp.com';
+  process.env.REACT_APP_NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://tahabitstracker.herokuapp.com';
 
 const loginUser = createAsyncThunk('user/login', async ({ body, successCallback, failureCallback }) => {
   const response = await fetch(`${serverURL}/users/login`, {
