@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+require('dotenv').config();
 
 const initialState = {
   habits: [],
@@ -6,8 +7,11 @@ const initialState = {
   error: null,
 };
 
+const serverURL =
+  process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://tahabitstracker.herokuapp.com';
+
 const fetchAllHabits = createAsyncThunk('habits/fetchAllHabits', async () => {
-  const response = await fetch('http://localhost:4000/habits', {
+  const response = await fetch(`${serverURL}/habits`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -19,7 +23,7 @@ const fetchAllHabits = createAsyncThunk('habits/fetchAllHabits', async () => {
 });
 
 const createNewHabit = createAsyncThunk('habits/createNewHabit', async (newHabit) => {
-  const response = await fetch('http://localhost:4000/habits', {
+  const response = await fetch(`${serverURL}/habits`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -32,7 +36,7 @@ const createNewHabit = createAsyncThunk('habits/createNewHabit', async (newHabit
 });
 
 const deleteHabit = createAsyncThunk('habits/deleteHabit', async (habitId) => {
-  const response = await fetch(`http://localhost:4000/habits/${habitId}`, {
+  const response = await fetch(`${serverURL}/habits/${habitId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -45,7 +49,7 @@ const deleteHabit = createAsyncThunk('habits/deleteHabit', async (habitId) => {
 
 const editHabit = createAsyncThunk('habits/editHabit', async (editedHabit) => {
   const id = editedHabit.id;
-  const response = await fetch(`http://localhost:4000/habits/${id}`, {
+  const response = await fetch(`${serverURL}/habits/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -58,7 +62,7 @@ const editHabit = createAsyncThunk('habits/editHabit', async (editedHabit) => {
 });
 
 const completedToday = createAsyncThunk('habits/completedToday', async (id) => {
-  const response = await fetch(`http://localhost:4000/habits/${id}/completed`, {
+  const response = await fetch(`${serverURL}/habits/${id}/completed`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

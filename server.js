@@ -2,8 +2,7 @@ const express = require('express');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { connectDB } = require('./database/db.js');
@@ -27,7 +26,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:3000',
+    origin: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://tahabitstracker.herokuapp.com',
   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -100,7 +99,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/habits', habitsRouter);
-app.use('/', userRouter);
+app.use('/users', userRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).send(err.message);

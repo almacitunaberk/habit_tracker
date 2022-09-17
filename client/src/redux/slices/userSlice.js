@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk, TaskAbortError } from '@reduxjs/toolkit';
-import { useNavigate } from 'react-router-dom';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+require('dotenv').config();
 
 const initialState = {
   user: null,
@@ -9,8 +9,11 @@ const initialState = {
   sessionExpires: null,
 };
 
+const serverURL =
+  process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://tahabitstracker.herokuapp.com';
+
 const loginUser = createAsyncThunk('user/login', async ({ body, successCallback, failureCallback }) => {
-  const response = await fetch('http://localhost:4000/login', {
+  const response = await fetch(`${serverURL}/users/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +30,7 @@ const loginUser = createAsyncThunk('user/login', async ({ body, successCallback,
 });
 
 const registerUser = createAsyncThunk('user/register', async ({ body, successCallback, failureCallback }) => {
-  const response = await fetch('http://localhost:4000/register', {
+  const response = await fetch(`${serverURL}/users/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -43,7 +46,7 @@ const registerUser = createAsyncThunk('user/register', async ({ body, successCal
 });
 
 const logoutUser = createAsyncThunk('user/logout', async (successCallback, failureCallback) => {
-  const response = await fetch('http://localhost:4000/logout', {
+  const response = await fetch(`${serverURL}/users/logout`, {
     method: 'POST',
     credentials: true,
   });
