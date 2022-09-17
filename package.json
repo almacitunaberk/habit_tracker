@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm-run-all --parallel watch:server client:start",
+    "start": "node server.js",
+    "devStart": "npm-run-all --parallel watch:server client:start",
     "client:start": "cd client && npm start",
     "watch:server": "nodemon server.js",
     "seed:user": "node ./seeds/userSeeder.js",
