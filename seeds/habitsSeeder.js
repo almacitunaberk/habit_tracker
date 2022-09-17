@@ -1,4 +1,4 @@
-const { sequelize, connectDB } = require('../database/db.js');
+const { sequelize } = require('../database/db.js');
 
 const Habit = require('../models/habitModel');
 const User = require('../models/userModel');
@@ -61,9 +61,8 @@ const habits = [
 ];
 
 const seedHabits = async () => {
-  await Habit.destroy({ where: {} });
   await sequelize.query('DROP TABLE IF EXISTS habits');
-  await Habit.sync();
+  await Habit.sync({ alter: true });
   try {
     const users = await User.findAll({ where: {} });
     for (let i = 0; i < habits.length; i++) {

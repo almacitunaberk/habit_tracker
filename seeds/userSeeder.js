@@ -1,4 +1,4 @@
-const { sequelize, connectDB } = require('../database/db.js');
+const { sequelize } = require('../database/db.js');
 
 const User = require('../models/userModel');
 
@@ -35,13 +35,9 @@ const users = [
   },
 ];
 
-const deleteUsers = async () => {
-  await User.destroy({ where: true });
-};
-
 const seedUsers = async () => {
-  await User.destroy({ where: {} });
-  await User.sync();
+  await sequelize.query('DROP TABLE IF EXISTS users');
+  await User.sync({ alter: true });
   for (let i = 0; i < users.length; i++) {
     const user = users[i];
     const userIns = await User.create(user);
