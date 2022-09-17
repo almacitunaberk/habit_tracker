@@ -1,5 +1,4 @@
 import './Login.css';
-import { FcGoogle } from 'react-icons/fc';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -79,9 +78,6 @@ function Login() {
           Sign In
         </button>
       </form>
-      <button className="button google__button">
-        Sign in with Google <FcGoogle />
-      </button>
       <div className="register__section">
         <span>Don't have an account?</span>
         <button onClick={handleRegister} className="register__button">

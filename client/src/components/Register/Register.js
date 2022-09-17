@@ -1,9 +1,8 @@
 import './Register.css';
-import { FcGoogle } from 'react-icons/fc';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser, registerUser } from '../../redux/slices/userSlice';
+import { registerUser } from '../../redux/slices/userSlice';
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -112,9 +111,6 @@ function Register() {
           Register
         </button>
       </form>
-      <button className="button google__button">
-        Register with Google <FcGoogle />
-      </button>
       <div className="register__section">
         <span>Already have an account?</span>
         <button onClick={handleLogin} className="register__button">
